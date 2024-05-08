@@ -32,7 +32,7 @@ jobs:
       - id: time
         uses: nanzm/get-time-action@v2.0
         with:
-          format: 'YY.MM'   
+          format: 'yy.MM'   
       - name: image-build-upload
         uses: fhdk/buildiso-action@main
         with:
@@ -40,11 +40,11 @@ jobs:
           branch: ${{ matrix.branch }}
           scope: ${{ matrix.scope }}
           version: ${{ steps.time.outputs.time }}
-          kernel: linux68
+          kernel: linux66
           disable-multilib: true
           iso-name: "bob"
           dist-name: "nix"
-          code-name: "Nightly-Build"
+          code-name: "SteamCity"
           release-tag: ${{ needs.prepare-release.outputs.release_tag }}
 
       - name: rollback
