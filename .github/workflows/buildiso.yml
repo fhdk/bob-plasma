@@ -1,0 +1,54 @@
+name: iso_build
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 2 * * *'
+
+jobs:
+  prepare-release:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: styfle/cancel-workflow-action@0.12.1
+        with:
+          access_token: ${{ github.token }}
+      - id: time
+        uses: nanzm/get-time-action@v2.0
+        with:
+          format: 'yyMMDDHHmm'
+    outputs:
+      release_tag: ${{ steps.time.outputs.time }}
+  build-release:
+    runs-on: ubuntu-20.04
+    needs: [prepare-release]
+    strategy:
+      matrix:
+        EDITION: [plasma]
+        BRANCH: [unstable]
+        SCOPE: [full]
+    steps:
+      - uses: styfle/cancel-workflow-action@0.12.1
+        with:
+          access_token: ${{ github.token }}
+      - id: time
+        uses: nanzm/get-time-action@v2.0
+        with:
+          format: 'YY.MM'   
+      - name: image-build-upload
+        uses: fhdk/buildiso-action@main
+        with:
+          edition: ${{ matrix.edition }}
+          branch: ${{ matrix.branch }}
+          scope: ${{ matrix.scope }}
+          version: ${{ steps.time.outputs.time }}
+          kernel: linux68
+          disable-multilib: true
+          iso-name: "bob"
+          dist-name: "nix"
+          code-name: "Nightly-Build"
+          release-tag: ${{ needs.prepare-release.outputs.release_tag }}
+
+      - name: rollback
+        if: ${{ failure() || cancelled() }}
+        run: |
+          echo ${{ github.token }} | gh auth login --with-token
+          gh release delete ${{ needs.prepare-release.outputs.release_tag }} -y --repo ${{ github.repository }}
