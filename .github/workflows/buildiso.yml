@@ -34,7 +34,7 @@ jobs:
         with:
           format: 'yy.MM'   
       - name: image-build-upload
-        uses: fhdk/buildiso-action@main
+        uses: fhdk/buildiso@main
         with:
           edition: ${{ matrix.edition }}
           branch: ${{ matrix.branch }}
