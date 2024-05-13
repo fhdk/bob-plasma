@@ -14,7 +14,7 @@ jobs:
       - id: time
         uses: nanzm/get-time-action@v2.0
         with:
-          format: 'yyMMDDHHmm'
+          format: 'YYMMDDHHmm'
     outputs:
       release_tag: ${{ steps.time.outputs.time }}
   build-release:
@@ -32,17 +32,17 @@ jobs:
       - id: time
         uses: nanzm/get-time-action@v2.0
         with:
-          format: 'yy.MM'   
+          format: 'YY.MM'   
       - name: image-build-upload
         uses: fhdk/buildiso@main
         with:
           edition: ${{ matrix.edition }}
           branch: ${{ matrix.branch }}
           scope: ${{ matrix.scope }}
-          version: ${{ steps.time.outputs.time }}
+          version: ""
           kernel: linux66
           disable-multilib: true
-          iso-name: "bob"
+          iso-name: "nix"
           dist-name: "nix"
           code-name: "SteamCity"
           release-tag: ${{ needs.prepare-release.outputs.release_tag }}
