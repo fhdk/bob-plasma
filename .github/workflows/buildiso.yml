@@ -14,7 +14,7 @@ jobs:
       - id: time
         uses: nanzm/get-time-action@v2.0
         with:
-          format: 'YYMMDD'
+          format: "YYYYMMDDHHmm"
     outputs:
       release_tag: ${{ steps.time.outputs.time }}
   build-release:
@@ -32,14 +32,14 @@ jobs:
       - id: time
         uses: nanzm/get-time-action@v2.0
         with:
-          format: 'YYMM'
+          format: "YYMM"
       - name: image-build-upload
         uses: fhdk/buildiso@main
         with:
           edition: ${{ matrix.edition }}
           branch: ${{ matrix.branch }}
           scope: ${{ matrix.scope }}
-          version: ${{ steps.time.outputs.time }}
+          version: "24.0"
           kernel: linux66
           disable-multilib: true
           iso-name: "nix"
