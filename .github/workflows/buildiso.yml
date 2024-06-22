@@ -42,11 +42,8 @@ jobs:
           kernel: linux66
           disable-multilib: true
           iso-name: "bob"
-          dist-name: "bob"
-          code-name: "Vanilla"
-          dist-branding: "BOB"
+          dist-name: "BuilderBob"
           release-tag: ${{ needs.prepare-release.outputs.release_tag }}
-
       - name: rollback
         if: ${{ failure() || cancelled() }}
         run: |
