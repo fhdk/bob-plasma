@@ -39,12 +39,12 @@ jobs:
           edition: ${{ matrix.edition }}
           branch: ${{ matrix.branch }}
           scope: ${{ matrix.scope }}
-          version: "24"
           kernel: linux66
           disable-multilib: true
           iso-name: "bob"
           dist-name: "bob"
           code-name: "Vanilla"
+          dist-branding: "BOB"
           release-tag: ${{ needs.prepare-release.outputs.release_tag }}
 
       - name: rollback
