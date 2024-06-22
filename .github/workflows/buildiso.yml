@@ -41,7 +41,7 @@ jobs:
           scope: ${{ matrix.scope }}
           kernel: linux66
           disable-multilib: true
-          iso-name: "bob"
+          iso-name: "manjaro"
           dist-name: "BuilderBob"
           release-tag: ${{ needs.prepare-release.outputs.release_tag }}
       - name: rollback
